@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { ProjectCard } from '@/components/project-card';
 import prisma from '@/lib/prisma';
 
