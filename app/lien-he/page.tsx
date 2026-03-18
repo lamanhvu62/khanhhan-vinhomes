@@ -46,7 +46,7 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-lg mb-2 text-[#2F2F2F] group-hover:text-[#E9C46A] transition-colors">Đường dây nóng</h3>
-                                    <p className="text-[#6B7280] leading-relaxed text-sm mb-1">Hotline CSKH: <strong className="text-[#E9C46A]">0909 123 456</strong></p>
+                                    <p className="text-[#6B7280] leading-relaxed text-sm mb-1">Hotline CSKH: <strong className="text-[#E9C46A]">0902 440 386</strong></p>
                                     <p className="text-[#6B7280] leading-relaxed text-sm">Giờ hoạt động: 24/7 (Phản hồi tức thì)</p>
                                 </div>
                             </div>

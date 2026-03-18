@@ -9,6 +9,7 @@ export async function GET(request: Request) {
         const projectId = searchParams.get('projectId') || '';
         const priceRange = searchParams.get('price') || '';
         const unitType = searchParams.get('type') || '';
+        const status = searchParams.get('status') || '';
 
         // Construct where clause dynamically
         const where: Prisma.UnitWhereInput = {};
@@ -17,7 +18,8 @@ export async function GET(request: Request) {
             where.OR = [
                 { title: { contains: keyword, mode: 'insensitive' } },
                 { content: { contains: keyword, mode: 'insensitive' } },
-                { building: { contains: keyword, mode: 'insensitive' } }
+                { building: { contains: keyword, mode: 'insensitive' } },
+                { project: { title: { contains: keyword, mode: 'insensitive' } } }
             ];
         }
 
@@ -29,6 +31,10 @@ export async function GET(request: Request) {
 
         if (unitType) {
             where.unitType = { contains: unitType, mode: 'insensitive' };
+        }
+
+        if (status) {
+            where.status = status;
         }
 
         if (priceRange) {

@@ -1,6 +1,7 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 generator client {
@@ -8,36 +9,45 @@ generator client {
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  location    String?
-  summary     String?
-  heroImage   String?
-  content     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  units       Unit[]
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  location  String?
+  summary   String?
+  heroImage String?
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  units     Unit[]
+
+  @@index([title])
 }
 
 model Unit {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  unitType    String
-  area        Float?
-  building    String?
-  floor       String?
-  view        String?
-  legal       String?
-  price       Float?
-  furniture   String?
-  content     String?
-  images      String[]
-  projectId   String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  unitType  String
+  area      Float?
+  building  String?
+  floor     String?
+  view      String?
+  legal     String?
+  price     Float?
+  furniture String?
+  content   String?
+  images    String[]
+  status    String   @default("Available")
+  projectId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([title])
+  @@index([projectId])
+  @@index([unitType])
+  @@index([price])
+  @@index([status])
 }
 
 model Post {
@@ -53,11 +63,11 @@ model Post {
 }
 
 model Lead {
-  id          String   @id @default(cuid())
-  name        String?
-  phone       String
-  email       String?
-  message     String?
-  page        String?
-  createdAt   DateTime @default(now())
+  id        String   @id @default(cuid())
+  name      String?
+  phone     String
+  email     String?
+  message   String?
+  page      String?
+  createdAt DateTime @default(now())
 }

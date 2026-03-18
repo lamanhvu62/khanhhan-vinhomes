@@ -21,6 +21,7 @@ export async function GET(request: Request) {
                     OR: [
                         { title: { contains: q, mode: 'insensitive' } },
                         { building: { contains: q, mode: 'insensitive' } },
+                        { project: { title: { contains: q, mode: 'insensitive' } } }
                     ]
                 },
                 select: { id: true, title: true, slug: true, project: { select: { title: true } } },

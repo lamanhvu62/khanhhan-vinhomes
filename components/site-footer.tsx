@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import Image from 'next/image';
 
 export function SiteFooter() {
     return (
@@ -8,7 +9,7 @@ export function SiteFooter() {
                 <div className="space-y-4">
                     <Link href="/" className="flex items-center space-x-2">
                         <span className="text-2xl font-bold text-[#2F2F2F] tracking-tight">
-                            Vinhomes<span className="text-[#E9C46A] px-1">Pro</span>
+                            <Image src="https://uomvaouwntiiyysoomhf.supabase.co/storage/v1/object/public/vinhomes/logo-vinhomes-2.png" alt="Logo" width={100} height={100} />
                         </span>
                     </Link>
                     <p className="text-sm text-[#6B7280] leading-relaxed mt-4">
@@ -32,7 +33,7 @@ export function SiteFooter() {
                         <li className="flex items-start gap-3">
                             <Phone className="w-5 h-5 text-[#E9C46A] shrink-0 mt-0.5" />
                             <div>
-                                <a href="tel:0909123456" className="text-[#E9C46A] font-bold block mb-1">0909 123 456</a>
+                                <a href="tel:0909123456" className="text-[#E9C46A] font-bold block mb-1">0902 440 386</a>
                                 <span>Hỗ trợ khách hàng 24/7 (Zalo, Viber)</span>
                             </div>
                         </li>

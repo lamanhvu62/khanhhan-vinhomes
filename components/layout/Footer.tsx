@@ -34,7 +34,7 @@ export default function Footer() {
                 <div>
                     <h3 className="font-semibold text-white mb-4">Liên hệ</h3>
                     <ul className="space-y-2 text-sm text-slate-400">
-                        <li>Phòng Kinh Doanh: 0909 123 456</li>
+                        <li>Phòng Kinh Doanh: 0902 440 386</li>
                         <li>Email: info@vinhomespro.vn</li>
                         <li>Địa chỉ: Tòa nhà Landmark 81, Vinhomes Central Park, Bình Thạnh, TP.HCM</li>
                     </ul>

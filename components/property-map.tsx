@@ -25,10 +25,6 @@ export default function PropertyMap({ units }: { units: any[] }) {
         setMounted(true);
     }, []);
 
-    if (typeof window === 'undefined' || !mounted) {
-        return <div className="h-[600px] w-full bg-[#F5F5F5] animate-pulse rounded-2xl"></div>;
-    }
-
     const baseLat = 10.8415;
     const baseLng = 106.8407;
 
@@ -52,6 +48,10 @@ export default function PropertyMap({ units }: { units: any[] }) {
             };
         });
     }, [units, baseLat, baseLng]);
+
+    if (typeof window === 'undefined' || !mounted) {
+        return <div className="h-[600px] w-full bg-[#F5F5F5] animate-pulse rounded-2xl"></div>;
+    }
 
     return (
         <MapContainer center={[baseLat, baseLng]} zoom={12} scrollWheelZoom={false} className="h-full w-full rounded-2xl z-0">

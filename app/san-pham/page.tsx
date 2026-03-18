@@ -20,6 +20,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
     const projectId = params.project || '';
     const priceRange = params.price || '';
     const unitType = params.type || '';
+    const status = params.status || '';
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {};
@@ -28,7 +29,8 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
         where.OR = [
             { title: { contains: keyword, mode: 'insensitive' } },
             { content: { contains: keyword, mode: 'insensitive' } },
-            { building: { contains: keyword, mode: 'insensitive' } }
+            { building: { contains: keyword, mode: 'insensitive' } },
+            { project: { title: { contains: keyword, mode: 'insensitive' } } }
         ];
     }
     if (projectId) {
@@ -36,6 +38,9 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
     }
     if (unitType) {
         where.unitType = { contains: unitType, mode: 'insensitive' };
+    }
+    if (status) {
+        where.status = status;
     }
     if (priceRange) {
         if (priceRange === 'under-2') {
@@ -79,7 +84,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
                             <Map className="w-4 h-4" /> BẢN ĐỒ
                         </Link>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                         <div>
                             <label className="text-xs font-bold text-[#6B7280] uppercase tracking-wider mb-2 block">Từ khóa</label>
                             <div className="relative">
@@ -103,6 +108,15 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
                                 <option value="1PN">1 Phòng Ngủ</option>
                                 <option value="2PN">2 Phòng Ngủ</option>
                                 <option value="3PN">3 Phòng Ngủ</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="text-xs font-bold text-[#6B7280] uppercase tracking-wider mb-2 block">Trạng thái</label>
+                            <select name="status" defaultValue={status} className="w-full h-14 bg-[#F5F5F5] border-none rounded-xl px-4 text-[#2F2F2F] outline-none focus-visible:ring-2 focus-visible:ring-[#E9C46A] appearance-none font-medium cursor-pointer">
+                                <option value="">Tất cả</option>
+                                <option value="Available">Đang mở bán</option>
+                                <option value="Reserved">Đã đặt chỗ</option>
+                                <option value="Sold">Đã bán</option>
                             </select>
                         </div>
                         <div>

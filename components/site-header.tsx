@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export function SiteHeader() {
@@ -6,7 +7,7 @@ export function SiteHeader() {
             <div className="container max-w-[1200px] mx-auto flex h-20 items-center justify-between px-4">
                 <Link href="/" className="flex items-center space-x-2">
                     <span className="text-2xl font-bold text-[#2F2F2F] tracking-tight">
-                        Vinhomes<span className="text-[#E9C46A] px-1">Pro</span>
+                        <Image src="https://uomvaouwntiiyysoomhf.supabase.co/storage/v1/object/public/vinhomes/logo-vinhomes-2.png" alt="Logo" width={100} height={100} />
                     </span>
                 </Link>
 

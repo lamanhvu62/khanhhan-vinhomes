@@ -68,16 +68,23 @@ export function PropertySearch() {
         const formData = new FormData(e.currentTarget);
         const keyword = formData.get('keyword');
         const project = formData.get('project');
+        const type = formData.get('type');
+        const price = formData.get('price');
+        const status = formData.get('status');
         const params = new URLSearchParams();
         if (keyword) params.append('keyword', keyword.toString());
         if (project) params.append('project', project.toString());
+        if (type) params.append('type', type.toString());
+        if (price) params.append('price', price.toString());
+        if (status) params.append('status', status.toString());
         router.push(`/san-pham?${params.toString()}`);
     }
 
     return (
         <div className="bg-white p-4 md:p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-[#E7E7E7] w-full max-w-5xl mx-auto flex flex-col gap-4 relative z-50 -mt-12">
-            <form onSubmit={onSubmit} className="flex flex-col md:flex-row gap-4 w-full relative" ref={containerRef}>
-                <div className="flex-1 relative">
+            <form onSubmit={onSubmit} className="flex flex-col gap-4 w-full relative" ref={containerRef}>
+                <div className="flex flex-col md:flex-row gap-4 w-full">
+                    <div className="flex-1 relative">
                     <label className="text-xs font-bold text-[#6B7280] uppercase tracking-wider mb-2 block">Từ khóa tìm kiếm</label>
                     <div className="relative">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B7280]" />
@@ -139,6 +146,35 @@ export function PropertySearch() {
                         ))}
                     </select>
                 </div>
+            </div>
+            
+            <div className="flex flex-col md:flex-row gap-4 w-full">
+                <div className="flex-1">
+                    <select name="type" className="w-full border-none bg-[#F5F5F5] focus-visible:ring-[#E9C46A] h-14 rounded-xl px-4 outline-none text-[#2F2F2F] appearance-none cursor-pointer font-medium text-sm">
+                        <option value="">Tất cả loại hình</option>
+                        <option value="Studio">Studio</option>
+                        <option value="1PN">1 Phòng Ngủ</option>
+                        <option value="2PN">2 Phòng Ngủ</option>
+                        <option value="3PN">3 Phòng Ngủ</option>
+                    </select>
+                </div>
+                <div className="flex-1">
+                    <select name="price" className="w-full border-none bg-[#F5F5F5] focus-visible:ring-[#E9C46A] h-14 rounded-xl px-4 outline-none text-[#2F2F2F] appearance-none cursor-pointer font-medium text-sm">
+                        <option value="">Mọi mức giá</option>
+                        <option value="under-2">Dưới 2 tỷ</option>
+                        <option value="2-5">2 - 5 tỷ</option>
+                        <option value="above-5">Trên 5 tỷ</option>
+                    </select>
+                </div>
+                <div className="flex-1">
+                    <select name="status" className="w-full border-none bg-[#F5F5F5] focus-visible:ring-[#E9C46A] h-14 rounded-xl px-4 outline-none text-[#2F2F2F] appearance-none cursor-pointer font-medium text-sm">
+                        <option value="">Mọi trạng thái</option>
+                        <option value="Available">Đang mở bán</option>
+                        <option value="Reserved">Đã đặt chỗ</option>
+                        <option value="Sold">Đã bán</option>
+                    </select>
+                </div>
+
                 <div className="flex flex-col md:flex-row items-end gap-3 flex-none mt-2 md:mt-0">
                     <Button type="submit" className="h-14 px-8 bg-[#E9C46A] hover:bg-[#DDBB57] text-white font-bold rounded-xl w-full md:w-auto shadow-sm transition-all duration-200">
                         <Search className="w-5 h-5 mr-2" />Tìm kiếm
@@ -147,6 +183,7 @@ export function PropertySearch() {
                         <Map className="w-5 h-5" />
                         <span className="md:hidden ml-2 font-bold">Tìm trên bản đồ</span>
                     </Link>
+                </div>
                 </div>
             </form>
         </div>

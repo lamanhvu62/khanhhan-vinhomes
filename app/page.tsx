@@ -137,7 +137,7 @@ export default async function HomePage() {
                 </div>
                 <div>
                   <div className="text-gray-400 font-semibold mb-1">Gọi ngay (24/7)</div>
-                  <div className="text-2xl font-bold tracking-wider text-[#E9C46A]">0909 123 456</div>
+                  <div className="text-2xl font-bold tracking-wider text-[#E9C46A]">0902 440 386</div>
                 </div>
               </div>
             </div>
