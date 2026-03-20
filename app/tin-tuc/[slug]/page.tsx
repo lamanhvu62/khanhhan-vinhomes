@@ -4,6 +4,7 @@ import { formatDateVN } from '@/lib/format';
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
 import { ChevronLeft, Calendar, UserRound } from 'lucide-react';
+import DOMPurify from 'isomorphic-dompurify';
 
 export const revalidate = 60;
 
@@ -49,9 +50,10 @@ export default async function PostDetailPage({ params }: { params: Promise<{ slu
                             </div>
                         )}
 
-                        <div className="prose prose-lg md:prose-xl max-w-none prose-slate whitespace-pre-wrap leading-relaxed text-[#6B7280]">
-                            {post.content}
-                        </div>
+                        <div 
+                            className="prose prose-sm md:prose-base max-w-none prose-slate whitespace-pre-wrap leading-relaxed text-[#6B7280]"
+                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content || '') }} 
+                        />
 
                         <div className="mt-16 pt-8 border-t border-[#E7E7E7] flex flex-col items-center text-center">
                             <div className="w-16 h-16 bg-[#F5F5F5] rounded-full mb-4 flex items-center justify-center border border-[#E7E7E7]">

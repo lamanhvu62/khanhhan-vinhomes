@@ -1,5 +1,5 @@
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
@@ -9,35 +9,40 @@ generator client {
 }
 
 model Project {
-  id        String   @id @default(cuid())
-  title     String
-  slug      String   @unique
-  location  String?
-  summary   String?
-  heroImage String?
-  content   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  units     Unit[]
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  type        String   @default("Apartment") // Căn hộ, Nhà phố, Shophouse...
+  location    String?
+  summary     String?
+  heroImage   String?  // Ảnh đại diện chính
+  images      String[] // Danh sách ảnh phối cảnh dự án
+  priceMin    Float?   // Giá thấp nhất để hiển thị "Giá từ..."
+  content     String?  @db.Text
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  units       Unit[]
 
   @@index([title])
+  @@index([type])
 }
 
 model Unit {
   id        String   @id @default(cuid())
-  title     String
+  title     String   // Ví dụ: Bcons City - Tháp Green Topaz - Căn A1
   slug      String   @unique
-  unitType  String
+  unitType  String   // 1PN, 2PN, 3PN
   area      Float?
-  building  String?
+  building  String?  // Tên tháp (ví dụ: Diamond, Solis...)
   floor     String?
-  view      String?
-  legal     String?
+  view      String?  // View hồ bơi, view Landmark 81...
+  legal     String?  @default("Hợp đồng mua bán")
   price     Float?
-  furniture String?
-  content   String?
+  furniture String?  // Giao thô, hoàn thiện cơ bản...
+  content   String?  @db.Text
   images    String[]
-  status    String   @default("Available")
+  status    String   @default("Available") // Available, Booked, Sold
   projectId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -56,10 +61,12 @@ model Post {
   slug        String   @unique
   excerpt     String?
   coverImage  String?
-  content     String?
+  content     String?  @db.Text
   publishedAt DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([title])
 }
 
 model Lead {
@@ -68,6 +75,8 @@ model Lead {
   phone     String
   email     String?
   message   String?
-  page      String?
+  page      String?  // Khách để lại thông tin từ trang nào (Dự án A hay Bài viết B)
   createdAt DateTime @default(now())
+
+  @@index([phone])
 }
