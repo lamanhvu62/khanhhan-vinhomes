@@ -2,18 +2,7 @@ export const dynamic = "force-dynamic";
 import { ProjectCard } from '@/components/project-card';
 import prisma from '@/lib/prisma';
 
-// Define the Project type locally to resolve the missing @prisma/client type export
-interface Project {
-    id: string;
-    title: string;
-    slug: string;
-    location: string | null;
-    summary: string | null;
-    heroImage: string | null;
-    content: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-}
+import { Project } from '@prisma/client';
 
 export const revalidate = 60;
 
