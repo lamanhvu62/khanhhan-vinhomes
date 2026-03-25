@@ -1,6 +1,6 @@
 import { UnitCard } from '@/components/unit-card';
 import prisma from '@/lib/prisma';
-import { Search, SlidersHorizontal, Map } from 'lucide-react';
+import { Search, SlidersHorizontal } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Prisma } from '@prisma/client';
@@ -80,9 +80,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
                             <SlidersHorizontal className="w-5 h-5 text-[#E9C46A]" />
                             <h3 className="font-bold text-[#2F2F2F] text-lg uppercase tracking-wider">Đang tìm kiếm ...</h3>
                         </div>
-                        <Link href="/map-search" className="text-sm font-bold text-[#6B7280] hover:text-[#E9C46A] transition-colors flex items-center gap-2">
-                            <Map className="w-4 h-4" /> BẢN ĐỒ
-                        </Link>
+
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                         <div>
