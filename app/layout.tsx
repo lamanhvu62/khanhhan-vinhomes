@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
-import { FloatingCTA } from "@/components/floating-cta";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,17 +27,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-[#E9C46A] selection:text-white bg-[#FFFFFF] text-[#2F2F2F] min-h-screen flex flex-col`}
-      >
-        <SiteHeader />
-        <main className="flex-1 w-full flex flex-col space-y-0">
+    <>
+      <html lang="vi">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-[#E9C46A] selection:text-white bg-[#FFFFFF] text-[#2F2F2F] min-h-screen flex flex-col`}
+        >
           {children}
-        </main>
-        <SiteFooter />
-        <FloatingCTA />
-      </body>
-    </html>
+        </body>
+      </html>
+      <Analytics />
+    </>
   );
 }
