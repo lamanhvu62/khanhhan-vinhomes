@@ -6,7 +6,7 @@ import prisma from '@/lib/prisma';
 import { MapPin, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
-import DOMPurify from 'isomorphic-dompurify';
+import RenderHtml from '@/components/render-html';
 
 export const revalidate = 60;
 
@@ -101,9 +101,9 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                             <span className="w-1.5 h-8 bg-[#E9C46A] rounded-full inline-block"></span>
                             Tổng Quan Dự Án
                         </h2>
-                        <div 
+                        <RenderHtml 
                             className="prose prose-sm md:prose-base max-w-none text-[#6B7280] prose-headings:text-[#2F2F2F] prose-a:text-[#E9C46A] prose-strong:text-[#2F2F2F] prose-p:leading-loose marker:text-[#E9C46A]"
-                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project.content || project.summary || '') }} 
+                            content={project.content || project.summary || ''}
                         />
 
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">

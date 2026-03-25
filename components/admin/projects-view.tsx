@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation';
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false, loading: () => <p className="text-gray-500 font-medium p-4">Đang tải trình soạn thảo...</p> });
 import 'react-quill-new/dist/quill.snow.css';
 
-import DOMPurify from 'isomorphic-dompurify';
 
 const stripHtml = (html: string) => {
   if (!html) return '';

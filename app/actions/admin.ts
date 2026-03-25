@@ -1,12 +1,9 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import DOMPurify from 'isomorphic-dompurify';
-
 const sanitizeHtml = (html: string) => {
   if (!html) return html;
-  const cleanHtml = html.replace(/&nbsp;/g, ' ');
-  return DOMPurify.sanitize(cleanHtml);
+  return html.replace(/&nbsp;/g, ' ');
 };
 
 export async function getDashboardStats() {
