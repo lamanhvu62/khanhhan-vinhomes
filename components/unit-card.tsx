@@ -35,6 +35,11 @@ export function UnitCard({ unit, projectName }: { unit: Unit, projectName?: stri
                     </div>
 
                     <div className="grid grid-cols-2 gap-y-3 gap-x-2 text-sm mb-6 bg-[#FAF3DD]/50 p-4 rounded-xl border border-[#FAF3DD]">
+                        {unit.tower && (
+                            <div className="col-span-2 text-[#6B7280] font-medium border-b border-[#E9C46A]/20 pb-2 mb-1">
+                                Phân khu/Tháp: <span className="font-semibold text-[#E9C46A] ml-1">{unit.tower}</span>
+                            </div>
+                        )}
                         <div className="text-[#6B7280] font-medium">DT: <span className="font-semibold text-[#2F2F2F]">{unit.area}m²</span></div>
                         <div className="text-[#6B7280] font-medium text-right">Tòa: <span className="font-semibold text-[#2F2F2F]">{unit.building}</span></div>
                     </div>

@@ -109,6 +109,26 @@ export async function updateUnitStatus(id: string, status: string) {
   }
 }
 
+export async function updateUnitDetails(id: string, data: any) {
+  try {
+    const unit = await prisma.unit.update({
+      where: { id },
+      data: {
+        title: data.title,
+        unitType: data.unitType,
+        area: data.area ? parseFloat(data.area.toString()) : null,
+        building: data.building,
+        tower: data.tower,
+        price: data.price ? parseFloat(data.price.toString()) : null,
+      }
+    });
+    revalidatePath('/admin');
+    return { success: true, unit };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}
+
 export async function getPosts() {
   return await prisma.post.findMany({
     orderBy: { createdAt: 'desc' }

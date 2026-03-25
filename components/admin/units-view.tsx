@@ -1,15 +1,31 @@
 "use client";
 import React, { useState } from 'react';
-import { MdAdd as Plus, MdSearch as Search, MdMap as Map } from 'react-icons/md';
+import { MdAdd as Plus, MdSearch as Search, MdMap as Map, MdClose as Close } from 'react-icons/md';
 import { useToast } from '@/components/admin/toast-context';
-import { updateUnitStatus } from '@/app/actions/admin';
+import { updateUnitStatus, updateUnitDetails } from '@/app/actions/admin';
 
 export default function UnitsView({ units = [], projects = [] }: { units?: any[], projects?: any[] }) {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [projectFilter, setProjectFilter] = useState('All');
   const [unitTypeFilter, setUnitTypeFilter] = useState('All');
+  const [editingUnit, setEditingUnit] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const res = await updateUnitDetails(editingUnit.id, editingUnit);
+    if(res.success) {
+      showToast("Đã cập nhật dự liệu thành công!", "success");
+      setEditingUnit(null);
+      setTimeout(() => window.location.reload(), 500);
+    } else {
+      showToast("Lỗi: " + res.error, "error");
+    }
+    setLoading(false);
+  }
 
   const getStatusColor = (status: string) => {
     switch(status) {
@@ -109,12 +125,53 @@ export default function UnitsView({ units = [], projects = [] }: { units?: any[]
               </div>
               <div className="px-5 py-4 border-t border-gray-50/80 bg-gray-50 flex items-center justify-between text-sm">
                  <span className="font-black text-gray-900 text-lg">{unit.price ? unit.price.toLocaleString() + ' Tỷ' : 'Liên hệ'}</span>
-                 <button className="font-bold text-indigo-600 hover:text-indigo-800 transition-colors">Sửa chi tiết</button>
+                 <button onClick={() => setEditingUnit(unit)} className="font-bold text-indigo-600 hover:text-indigo-800 transition-colors cursor-pointer">Sửa chi tiết</button>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {editingUnit && (
+        <div className="fixed inset-0 z-[100] bg-black/60 flex items-center justify-center p-4">
+           <div className="bg-white rounded-3xl w-full max-w-lg p-6 relative animate-in fade-in zoom-in-95 shadow-2xl">
+             <button onClick={() => setEditingUnit(null)} className="absolute top-4 right-4 p-2 text-gray-400 hover:bg-gray-100 rounded-xl transition-colors cursor-pointer"><Close className="w-6 h-6"/></button>
+             <h3 className="font-black text-2xl text-gray-900 mb-6 tracking-tight">Cập nhật sản phẩm</h3>
+             <form onSubmit={handleEditSubmit} className="space-y-5">
+                <div>
+                   <label className="block text-sm font-bold text-gray-700 mb-1">Mã căn / Tên hiển thị</label>
+                   <input required value={editingUnit.title} onChange={e => setEditingUnit({...editingUnit, title: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none font-bold text-gray-900 bg-gray-50 focus:bg-white transition-all shadow-sm" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-1">Phân khu / Tháp (mới)</label>
+                    <input value={editingUnit.tower || ''} onChange={e => setEditingUnit({...editingUnit, tower: e.target.value})} placeholder="VD: Origami" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none font-bold text-gray-900 bg-gray-50 focus:bg-white transition-all shadow-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-1">Tòa (Building)</label>
+                    <input value={editingUnit.building || ''} onChange={e => setEditingUnit({...editingUnit, building: e.target.value})} placeholder="VD: S1.01" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none font-bold text-gray-900 bg-gray-50 focus:bg-white transition-all shadow-sm" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-1">Diện tích (m2)</label>
+                    <input type="number" step="0.1" value={editingUnit.area || ''} onChange={e => setEditingUnit({...editingUnit, area: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-500 outline-none font-bold text-gray-900 bg-gray-50 focus:bg-white shadow-sm" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-1">Giá bán (Tỷ)</label>
+                    <input type="number" step="0.1" value={editingUnit.price || ''} onChange={e => setEditingUnit({...editingUnit, price: e.target.value})} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-indigo-500 outline-none font-bold text-gray-900 bg-gray-50 focus:bg-white shadow-sm" />
+                  </div>
+                </div>
+                <div className="flex justify-end gap-3 pt-6 mt-4 border-t border-gray-100">
+                   <button type="button" onClick={() => setEditingUnit(null)} className="px-6 py-3 rounded-xl text-gray-600 bg-gray-100 hover:bg-gray-200 font-bold transition-colors cursor-pointer">Hủy bỏ</button>
+                   <button type="submit" disabled={loading} className="px-6 py-3 rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 font-bold shadow-md shadow-indigo-200 transition-all cursor-pointer">
+                     {loading ? 'Đang lưu...' : 'Lưu lại'}
+                   </button>
+                </div>
+             </form>
+           </div>
+        </div>
+      )}
     </div>
   );
 }

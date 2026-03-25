@@ -35,6 +35,7 @@ model Unit {
   unitType  String   // 1PN, 2PN, 3PN
   area      Float?
   building  String?  // Tên tháp (ví dụ: Diamond, Solis...)
+  tower     String?  // Phân khu/Tháp (ví dụ: Origami, Glory Heights)
   floor     String?
   view      String?  // View hồ bơi, view Landmark 81...
   legal     String?  @default("Hợp đồng mua bán")
